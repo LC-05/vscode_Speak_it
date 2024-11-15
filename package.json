@@ -1,8 +1,9 @@
 {
   "name": "speakit",
-  "displayName": "SpeakIt",
-  "description": "speak words",
+  "displayName": "Speak it",
+  "description": "Speak selected words.",
   "version": "0.0.1",
+  "icon": "./icon/icon.png",
   "engines": {
     "vscode": "^1.95.0"
   },
@@ -59,5 +60,9 @@
     "request": "^2.88.2",
     "sound-play": "^1.1.0",
     "tmp": "^0.2.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LC-05/vscode_Speak_it.git"
   }
 }

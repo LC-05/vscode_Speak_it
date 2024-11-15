@@ -6,7 +6,7 @@ const request = require("request");
 const os = require("os");
 const tmpPath = path.join(os.tmpdir(), "vscode_speak_it"); // 系统临时文件路径
 const filePath = tmpPath + "/tmp.mp3";
-const youdaoUrl = "https://dict.youdao.com/dictvoice?type=0&audio=";
+const api = "https://dict.youdao.com/dictvoice?type=0&audio=";
 
 export function activate(context: vscode.ExtensionContext) {
   cleanTmpFile();
@@ -15,20 +15,20 @@ export function activate(context: vscode.ExtensionContext) {
     if (text) {
       isExists(tmpPath)
         .then((res) => {
-          getVoice(text);
+          playVoice(text);
         })
         .catch((rej) => {
           fs.mkdirSync(tmpPath);
-          getVoice(text);
+          playVoice(text);
         });
     }
   });
   context.subscriptions.push(disposable);
 }
 
-function getVoice(text: string) {
+function playVoice(text: string) {
   const stream = fs.createWriteStream(filePath);
-  request(youdaoUrl + text)
+  request(api + text)
     .pipe(stream)
     .on("close", () => {
       sound
