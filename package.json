@@ -4,6 +4,7 @@
   "description": "Speak selected words.",
   "version": "0.0.1",
   "icon": "./icon/icon.png",
+  "publisher": "LC-05",
   "engines": {
     "vscode": "^1.95.0"
   },
