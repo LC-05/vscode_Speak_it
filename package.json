@@ -17,7 +17,23 @@
         "command": "speak.speakit",
         "title": "Speak it"
       }
-    ]
+    ],
+    "keybindings": [
+      {
+        "command": "speak.speakit",
+        "key": "",
+        "mac": "",
+        "when": "editorHasSelection"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "speak.speakit",
+          "when": "editorHasSelection"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
