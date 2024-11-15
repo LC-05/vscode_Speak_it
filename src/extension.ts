@@ -27,19 +27,24 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function playVoice(text: string) {
+  //todo 过滤非英文字符
+  const filteredText = text.replace(/[^a-zA-Z]/g, "").substring(0, 50);
   const stream = fs.createWriteStream(filePath);
-  request(api + text)
+  request(api + filteredText)
     .pipe(stream)
     .on("close", () => {
       sound
         .play(filePath)
         .then(() => {
-          console.log(`play ${text} done`);
+          console.log(`play ${filteredText} done`);
           cleanTmpFile();
         })
         .catch((error: any) => {
           console.log(error);
         });
+    })
+    .on("error", (error: any) => {
+      console.log(error);
     });
 }
 /**

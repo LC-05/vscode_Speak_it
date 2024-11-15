@@ -2,7 +2,7 @@
   "name": "speakit",
   "displayName": "Speak it",
   "description": "Speak selected words.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "./icon/icon.png",
   "publisher": "LC-05",
   "engines": {
