@@ -25,7 +25,10 @@ export function activate(context: vscode.ExtensionContext) {
   });
   context.subscriptions.push(disposable);
 }
-
+/**
+ * 播放语音
+ * @param {string} text - 要播放的文本
+ */
 function playVoice(text: string) {
   //todo 过滤非英文字符
   const filteredText = text.replace(/[^a-zA-Z]/g, "").substring(0, 50);
@@ -41,9 +44,11 @@ function playVoice(text: string) {
         })
         .catch((error: any) => {
           console.log(error);
+          showErrorMessage(error);
         });
     })
     .on("error", (error: any) => {
+      showErrorMessage(error);
       console.log(error);
     });
 }
@@ -55,7 +60,8 @@ function cleanTmpFile() {
     isExists(filePath).then((res) => {
       fs.unlink(filePath, (err: any) => {
         if (err) {
-          console.error("delete file faild", err);
+          showErrorMessage("delete file faild:" + err);
+          console.log("delete file faild:" + err);
         } else {
           console.log("delete file done");
         }
@@ -85,5 +91,8 @@ function getSelectedText(): string | undefined {
     const selectedText = editor.selection;
     return editor.document.getText(selectedText);
   }
+}
+function showErrorMessage(message: string) {
+  vscode.window.showErrorMessage(message);
 }
 export function deactivate() {}
