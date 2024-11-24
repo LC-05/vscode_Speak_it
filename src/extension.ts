@@ -6,11 +6,21 @@ const request = require("request");
 const os = require("os");
 const tmpPath = path.join(os.tmpdir(), "vscode_speak_it"); // 系统临时文件路径
 const filePath = tmpPath + "/tmp.mp3";
-const api = "https://dict.youdao.com/dictvoice?type=0&audio=";
+const replaceSign = "$content$"; // 占位符
+let api = "";
+//备用api https://api.dictionaryapi.dev/api/v2/entries/en/$content$ 
 
 export function activate(context: vscode.ExtensionContext) {
   cleanTmpFile();
   const disposable = vscode.commands.registerCommand("speak.speakit", () => {
+    api =
+      vscode.workspace
+        .getConfiguration()
+        .get("speakit.speakItPronunciationApi") || "";
+    if (api === "") {
+      showErrorMessage("speakit.speakItPronunciationApi is empty");
+      return;
+    }
     const text = getSelectedText();
     if (text) {
       isExists(tmpPath)
@@ -31,9 +41,10 @@ export function activate(context: vscode.ExtensionContext) {
  */
 function playVoice(text: string) {
   //todo 过滤非英文字符
-  const filteredText = text.replace(/[^a-zA-Z]/g, "").substring(0, 50);
+  const filteredText = text.replace(/[^a-zA-Z]/g, "").substring(0, 50); // 过滤非英文字符并截取前50个字符
   const stream = fs.createWriteStream(filePath);
-  request(api + filteredText)
+  const fullApi = api.replace(replaceSign, filteredText); // 替换占位符
+  request(fullApi)
     .pipe(stream)
     .on("close", () => {
       sound

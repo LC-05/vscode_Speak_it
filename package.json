@@ -2,7 +2,7 @@
   "name": "speakit",
   "displayName": "Speak it",
   "description": "Speak selected words.",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "icon": "./icon/icon.png",
   "publisher": "LC-05",
   "engines": {
@@ -20,6 +20,17 @@
         "title": "Speak it"
       }
     ],
+    "configuration": {
+      "type": "object",
+      "title": "speakit",
+      "properties": {
+        "speakit.speakItPronunciationApi": {
+          "type": "string",
+          "default": "https://dict.youdao.com/dictvoice?type=0&audio=$content$",
+          "description": "$content$ will be replaced by the selected text."
+        }
+      }
+    },
     "keybindings": [
       {
         "command": "speak.speakit",
